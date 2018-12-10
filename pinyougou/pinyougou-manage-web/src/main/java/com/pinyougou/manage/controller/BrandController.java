@@ -23,6 +23,11 @@ public class BrandController {
     @Reference
     private BrandService brandService;
 
+    @GetMapping("/testPage")
+    public List<TbBrand> testPage(Integer page, Integer rows){
+        return brandService.testPage(page,rows);
+    }
+
     @GetMapping("/findAll")
     public List<TbBrand> findAll(){
         return brandService.queryAll();
