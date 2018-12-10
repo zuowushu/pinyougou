@@ -9,9 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * BrandController class
+ *
+ * @Author: lonelywind
+ * @Date: 2018/12/10 21:15
+ */
 @RequestMapping("/brand")
 @RestController
 public class BrandController {
+
 
     @Reference
     private BrandService brandService;
