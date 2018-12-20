@@ -26,7 +26,7 @@ public interface BaseService<T> {
      *
      * @return 实体类对象集合
      */
-    public List<T> finAll();
+    public List<T> findAll();
 
     /**
      * 根据条件查询列表

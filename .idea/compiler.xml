@@ -6,15 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="fastdfs_client" />
         <module name="pinyougou-common" />
         <module name="pinyougou-dao" />
         <module name="pinyougou-manage-web" />
         <module name="pinyougou-pojo" />
         <module name="pinyougou-sellergoods-interface" />
         <module name="pinyougou-sellergoods-service" />
+        <module name="pinyougou-shop-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="fastdfs_client" target="1.5" />
       <module name="pinyougou" target="1.8" />
       <module name="pinyougou-common" target="1.8" />
       <module name="pinyougou-dao" target="1.8" />
@@ -23,6 +26,8 @@
       <module name="pinyougou-sellergoods" target="1.8" />
       <module name="pinyougou-sellergoods-interface" target="1.8" />
       <module name="pinyougou-sellergoods-service" target="1.8" />
+      <module name="pinyougou-shop-web" target="1.8" />
+      <module name="security" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
