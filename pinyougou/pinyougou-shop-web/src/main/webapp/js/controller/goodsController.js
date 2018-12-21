@@ -34,7 +34,7 @@ app.controller("goodsController", function ($scope, $controller, $location, good
                 alert(response.message);
                 $scope.entity = { };
                 editor.html("");
-                /*location.href = "goods.html";*/
+                location.href = "goods.html";
             } else {
                 alert(response.message);
             }

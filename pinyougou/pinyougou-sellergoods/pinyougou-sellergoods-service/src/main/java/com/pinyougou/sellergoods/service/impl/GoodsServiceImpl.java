@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service(interfaceClass = GoodsService.class)
 public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsService {
@@ -40,6 +37,7 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
 
     @Autowired
     private ItemMapper itemMapper;
+
     @Override
     public PageResult search(Integer page, Integer rows, TbGoods goods) {
         PageHelper.startPage(page, rows);
@@ -47,13 +45,14 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
         Example example = new Example(TbGoods.class);
         Example.Criteria criteria = example.createCriteria();
 
-        if (!StringUtils.isEmpty(goods.getSellerId())){
-            criteria.andEqualTo("sellerId",goods.getSellerId());
+        criteria.andNotEqualTo("isDelete","1");
+        if (!StringUtils.isEmpty(goods.getSellerId())) {
+            criteria.andEqualTo("sellerId", goods.getSellerId());
         }
-        if (!StringUtils.isEmpty(goods.getAuditStatus())){
-            criteria.andEqualTo("auditStatus",goods.getAuditStatus());
+        if (!StringUtils.isEmpty(goods.getAuditStatus())) {
+            criteria.andEqualTo("auditStatus", goods.getAuditStatus());
         }
-        if(!StringUtils.isEmpty(goods.getGoodsName())){
+        if (!StringUtils.isEmpty(goods.getGoodsName())) {
             criteria.andLike("goodsName", "%" + goods.getGoodsName() + "%");
         }
 
@@ -84,7 +83,7 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
 
         //查询商品规格信息
         Example example = new Example(TbItem.class);
-        example.createCriteria().andEqualTo("goodsId",id);
+        example.createCriteria().andEqualTo("goodsId", id);
         List<TbItem> itemList = itemMapper.selectByExample(example);
         goods.setItemList(itemList);
         return goods;
@@ -110,7 +109,7 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
     private void saveItemList(Goods goods) {
         if ("1".equals(goods.getGoods().getIsEnableSpec())) {
             //启用规格
-            if(goods.getItemList() != null && goods.getItemList().size() > 0){
+            if (goods.getItemList() != null && goods.getItemList().size() > 0) {
                 for (TbItem item : goods.getItemList()) {
 
                     //sku标题 = spu的名称+规格的名称拼接
@@ -176,5 +175,33 @@ public class GoodsServiceImpl extends BaseServiceImpl<TbGoods> implements GoodsS
         //品牌
         TbBrand brand = brandMapper.selectByPrimaryKey(goods.getGoods().getBrandId());
         item.setBrand(brand.getName());
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        TbGoods goods = new TbGoods();
+        goods.setAuditStatus(status);
+
+        Example example = new Example(TbGoods.class);
+        example.createCriteria().andIn("id", Arrays.asList(ids));
+        goodsMapper.updateByExampleSelective(goods,example);
+
+        if ("2".equals(status)){
+            TbItem item = new TbItem();
+            item.setStatus("1");
+            Example itemExample = new Example(TbItem.class);
+            itemExample.createCriteria().andIn("goodsId",Arrays.asList(ids));
+            itemMapper.updateByExampleSelective(item,itemExample);
+        }
+    }
+
+    @Override
+    public void deleteGoodsByIds(Long[] ids) {
+        TbGoods goods = new TbGoods();
+        goods.setIsDelete("1");
+
+        Example example = new Example(TbGoods.class);
+        example.createCriteria().andIn("id",Arrays.asList(ids));
+        goodsMapper.updateByExampleSelective(goods,example);
     }
 }
