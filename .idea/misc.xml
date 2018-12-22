@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/pinyougou/pinyougou-content/pinyougou-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou/pinyougou-manage-web" />
+    <file type="web" url="file://$PROJECT_DIR$/pinyougou/pinyougou-portal-web" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou/pinyougou-sellergoods/pinyougou-sellergoods-service" />
     <file type="web" url="file://$PROJECT_DIR$/pinyougou/pinyougou-shop-web" />
     <file type="web" url="file://$PROJECT_DIR$/security" />
