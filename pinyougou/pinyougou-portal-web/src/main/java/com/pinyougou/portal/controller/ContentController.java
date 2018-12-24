@@ -28,7 +28,7 @@ public class ContentController {
      * @param categoryId 内容分类id
      * @return 内容列表
      */
-    @GetMapping("/find")
+    @GetMapping("/findContentListByCategoryId")
     public List<TbContent> findContentListByCategoryId(Long categoryId){
         return contentService.findContentListByCategoryId(categoryId);
     }
